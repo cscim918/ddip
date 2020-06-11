@@ -73,6 +73,6 @@ fabric.properties
 .env.test
 
 # config.json
-./config
+./config/config.json
 
 # End of https://www.gitignore.io/api/webstorm
