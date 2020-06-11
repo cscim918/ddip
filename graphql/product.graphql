@@ -1,0 +1,17 @@
+scalar JSONB
+enum iswoman {
+    Yes
+    No
+}
+type Product{
+    id: Int,
+    market_name: String,
+    product_name: String,
+    product_quantity: Int,
+    product_price: Int,
+    product_category: String,
+    product_description: String,
+    product_img: String,
+    product_onlyWoman: iswoman,
+    marketID: Int
+}

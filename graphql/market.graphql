@@ -1,0 +1,12 @@
+enum deliverselect{
+    Direct
+    Delivery
+}
+type Market{
+    id: Int,
+    market_name: String,
+    address: String,
+    tel_market: String,
+    deli_market: deliverselect,
+    products: [Product]
+}

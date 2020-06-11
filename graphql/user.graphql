@@ -1,0 +1,26 @@
+type User {
+    id: Int,
+    user_name: String,
+    password: String,
+    email: String,
+    gender: genderselect,
+    tel_user: String,
+    lat_user: Float,
+    long_user: Float,
+    address: String,
+    tel_certify: Boolean,
+    balance: Int,
+    account: Int
+}
+type addUserResponse{
+    ok: Boolean
+    error: String
+    token : String
+}
+type detail{
+    user: User
+}
+enum genderselect{
+    Man
+    Woman
+}

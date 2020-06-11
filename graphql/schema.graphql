@@ -1,0 +1,53 @@
+type Query {
+    getUser: User
+    allUser: [User]
+    allMarket: [Market]
+    allProduct: [Product]
+    marketproducts(marketID: Int) : [Product]
+    getmarketID(market_name: String) : [Market]
+}
+type Mutation {
+    addUser(
+        user_name: String,
+        password: String,
+        email: String,
+        gender: genderselect,
+        tel_user: String,
+        lat_user: Float,
+        long_user: Float,
+        address: String,
+        tel_certify: Boolean,
+        balance: Int,
+        account: Int
+    ): addUserResponse,
+    deleteUser(
+        user_name: String,
+        password: String
+    ): addUserResponse,
+    updateUser(
+            user_name: String,
+            password: String,
+            email: String,
+            tel_user: String,
+            account: Int
+            ): [User!]!,
+    addMarket(
+        market_name: String,
+        address: String,
+        tel_market: String,
+        deli_market: deliverselect,
+    ): Market,
+    addProduct(
+        product_name: String,
+        product_quantity: Int,
+        product_price: Int,
+        product_category: String,
+        product_description: String,
+        product_img:JSONB,
+        product_onlyWoman:iswoman,
+        marketID: Int
+    ): Product,
+    productsOFmarket(
+        market_name: String
+    ):Product
+}
