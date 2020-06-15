@@ -17,9 +17,6 @@ type addUserResponse{
     error: String
     token : String
 }
-type detail{
-    user: User
-}
 enum genderselect{
     Man
     Woman
