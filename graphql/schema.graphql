@@ -1,10 +1,15 @@
 type Query {
-    getUser: User
+    getUser: getUserResponse
     allUser: [User]
     allMarket: [Market]
     allProduct: [Product]
     marketproducts(marketID: Int) : [Product]
     getmarketID(market_name: String) : [Market]
+}
+type getUserResponse{
+    ok: Boolean
+    error: String
+    user: User
 }
 type Mutation {
     addUser(
@@ -20,6 +25,7 @@ type Mutation {
         balance: Int,
         account: Int
     ): addUserResponse,
+    SignIn(user_name: String, password: String): getUserResponse,
     deleteUser(
         user_name: String,
         password: String

@@ -4,14 +4,13 @@ const models = require('./models');
 const expressPlayground = require('graphql-playground-middleware-express').default
 const decodeJWT = require('./middleware/decodeJWT');
 require("dotenv").config();
-
+const {GraphQLServer } = require('graphql-yoga');
 /*
 const cors = require('cors');
 const helmet = require('helmet');
 const logger = require('morgan');
 const { GraphQLServer } = require('graphql-yoga');
  */
-
 const path = require('path')
 const mergeGraphqlSchemas = require('merge-graphql-schemas')
 const fileLoader = mergeGraphqlSchemas.fileLoader
@@ -27,44 +26,49 @@ const server = new ApolloServer({
     context: { models }
 });
 
+/*class App{
+    app = GraphQLServer;
+    constructor(){
+        this.app = new GraphQLServer({
+            schema,
+            context: req =>{
+                return{
+                    req: req.request
+                }
+            }
+        })
+    }
+}
+ */
+
 app.use(
     jwt = async (req, res, next) => {
         const token = req.get("X-JWT");
         if(token){
             const user = await decodeJWT(token);
-            console.log(user);
+            req.user = user;
+            console.log(req.user);
         }
         next();
     }
 )
 
-/*
-app.use(
+/*app.use(
     jwt = async (req, res, next) => {
         const token = req.get("X-JWT");
-        try {
-            const nickname = await decodeJWT(token);
-            req.nickname = nickname;
-            console.log(req.nickname);
-        } catch (error) {
+        if(!token){
+            return next();
+        }
+        try{
+            const nickName = await decodeJWT(token);
+            req.nickName = nickName;
+            return next();
+        }catch(error){
             console.log("err");
             return error;
         }
     }
 )
- */
-/*class App{
-    app: GraphQLServer;
-    constructor() {
-        this.app = new GraphQLServer({});
-        this.middlewares();
-    }
-    middlewares = (): void => {
-        this.app.express.use(cors());
-        this.app.express.use(logger('dev'));
-        this.app.express.use(helmet());
-    };
-}
  */
 
 server.applyMiddleware({ app });
@@ -74,18 +78,6 @@ models.sequelize.sync();
 
 app.get('/',(req, res) => res.end('Welcome to the API'))
 app.get('/playground', expressPlayground({endpoint: '/graphql'}))
-
-/*app.get(
-    async function(req, res, next) {
-        const token = req.get("X-JWT");
-        if (token) {
-            const user = await decodeJWT(token);
-            req.user = user;
-        }
-        next();
-    }
-)
- */
 
 app.listen({port}, () => {
     console.log(`GraphQL Server running on ${server.graphqlPath}`)
